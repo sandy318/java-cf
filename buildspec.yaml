@@ -1,0 +1,17 @@
+version: 0.2
+
+phases:
+
+  build:
+    commands:
+      - echo Build started on `date`
+      - mvn test 
+      - mvn package
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - aws cloudformation package --template-file $TEMPLATE_FILE --s3-bucket $S3_BUCKET --output-template-file sam-template-output.yaml
+
+artifacts:
+  files:
+    - sam-template-output.yaml
